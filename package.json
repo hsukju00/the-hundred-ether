@@ -1,5 +1,5 @@
 {
-  "name": "100ether",
+  "name": "the-hundred-ether",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
