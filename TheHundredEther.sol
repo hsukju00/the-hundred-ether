@@ -12,7 +12,7 @@ contract TheHundredEther {
 
     address public owner;
     uint public numPurchasedArea;
-    Area[10000] private areas;
+    Area[100] public areas;
 
     constructor() {
         owner = msg.sender;
@@ -25,16 +25,21 @@ contract TheHundredEther {
     }
 
     function purchaseArea(uint _index, string memory _url) public payable {
+
+        require(0 <= _index || _index < 100);
         require(!areas[_index].isPurchased);
         require(msg.value == 0.01 ether);
 
         Area storage area = areas[_index];
+        area.isPurchased = true;
         area.owner = msg.sender;
         area.url = _url;
         numPurchasedArea++;
     }
 
     function replaceAreaUrl(uint _index, string memory _url) public payable {
+
+        require(0 <= _index || _index < 100);
         require(areas[_index].owner == msg.sender);
 
         Area storage area = areas[_index];

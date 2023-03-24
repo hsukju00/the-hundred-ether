@@ -1,4 +1,4 @@
-const abiObj = [
+const abiObj =[
 	{
 		"inputs": [
 			{
@@ -48,6 +48,35 @@ const abiObj = [
 		"type": "function"
 	},
 	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "areas",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "isPurchased",
+				"type": "bool"
+			},
+			{
+				"internalType": "address",
+				"name": "owner",
+				"type": "address"
+			},
+			{
+				"internalType": "string",
+				"name": "url",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
 		"inputs": [],
 		"name": "numPurchasedArea",
 		"outputs": [
@@ -73,7 +102,9 @@ const abiObj = [
 		"stateMutability": "view",
 		"type": "function"
 	}
-]
+] 
+const contractAddress = "0x88571a503f267de5065792aB1d2cc11c2e406Db1";
+        
 
 const ethereum = window.ethereum;
 const checkModernWeb = typeof ethereum !== "undefined";
@@ -87,10 +118,7 @@ window.addEventListener("load", async () => {
     if (!checkModernWeb) return;
 
     const web3 = new Web3("http://localhost:8545");
-    const contract = await new web3.eth.Contract(
-        abiObj,
-        "0x2F31269DC09318cc0c37bE841C12De8d5c074f38"
-    );
+    const contract = await new web3.eth.Contract(abiObj, contractAddress);
 
     const numPurchasedAreaSpan = document.getElementById("numPurchasedArea");
     const numRemainAreaSpan = document.getElementById("numRemainArea");
@@ -103,6 +131,7 @@ window.addEventListener("load", async () => {
     const connectEthereumAccountBtn = document.getElementById(
         "connectEthereumAccountBtn"
     );
+
     connectEthereumAccountBtn.addEventListener("click", async () => {
         const currentAccountSpan = document.getElementById("currentAccount");
         const accounts = await ethereum.request({
@@ -112,16 +141,17 @@ window.addEventListener("load", async () => {
         currentAccountSpan.innerText = accounts[0];
     });
 
-    const buyAreaBtn = document.getElementById("buyAreaBtn");
-    buyAreaBtn.addEventListener("click", async () => {
-        if (contract.defaultAccount === null) return;
-    });
-
     const mapDiv = document.getElementById("map");
-    for (let i=0; i<100; i++) {
-        const areaDiv = document.createElement("div");
-        areaDiv.id = "area"
-        areaDiv.value = `${i}`;
-        mapDiv.appendChild(areaDiv);
+    for (let i = 0; i < 100; i++) {
+        contract.methods.areas(i).call((err, areaObj) => {
+            const areaDiv = document.createElement("div");
+            areaDiv.id = "area";
+            if (areaObj.isPurchased) {
+                console.log(areaObj);
+                areaDiv.innerText = areaObj.url;
+            }
+            mapDiv.appendChild(areaDiv);
+        });
+
     }
 });
