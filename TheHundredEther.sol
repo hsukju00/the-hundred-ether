@@ -2,7 +2,7 @@
 
 pragma solidity >= 0.7.0;
 
-contract OnehundredEther {
+contract TheHundredEther {
     
     struct Area {
         bool isPurchased;
@@ -45,5 +45,5 @@ contract OnehundredEther {
         if (!payable(owner).send(address(this).balance))
             revert();
     }
-    
+
 }
