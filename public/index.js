@@ -1,4 +1,4 @@
-const abiObj =[
+const abiObj = [
 	{
 		"inputs": [
 			{
@@ -102,8 +102,8 @@ const abiObj =[
 		"stateMutability": "view",
 		"type": "function"
 	}
-] 
-const contractAddress = "0x88571a503f267de5065792aB1d2cc11c2e406Db1";
+]
+const contractAddress = "0xD4297Ba276a0Db11411A9DcA9a59Ad2d7D3C15b5";
         
 
 const ethereum = window.ethereum;
@@ -120,8 +120,8 @@ window.addEventListener("load", async () => {
     const web3 = new Web3("http://localhost:8545");
     const contract = await new web3.eth.Contract(abiObj, contractAddress);
 
-    const numPurchasedAreaSpan = document.getElementById("numPurchasedArea");
-    const numRemainAreaSpan = document.getElementById("numRemainArea");
+    const numPurchasedAreaSpan = document.getElementById("num-purchased-area");
+    const numRemainAreaSpan = document.getElementById("num-remain-area");
 
     contract.methods.numPurchasedArea().call((err, result) => {
         numPurchasedAreaSpan.innerText = result;
@@ -129,11 +129,11 @@ window.addEventListener("load", async () => {
     });
 
     const connectEthereumAccountBtn = document.getElementById(
-        "connectEthereumAccountBtn"
+        "connect-ethereum-account-btn"
     );
 
     connectEthereumAccountBtn.addEventListener("click", async () => {
-        const currentAccountSpan = document.getElementById("currentAccount");
+        const currentAccountSpan = document.getElementById("current-account");
         const accounts = await ethereum.request({
             method: "eth_requestAccounts",
         });

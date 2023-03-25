@@ -11,17 +11,19 @@
                 The Hundred Ether
             </h1>
             <h3>Team: 홍석주(20193398)</h3>
-            <p>각 area 당 0.01 ether (= 10000000000000000 wei)</p>
-            <p>구매된 area 수: <span id="numPurchasedArea"></span></p>
-            <p>남은 area 수: <span id="numRemainArea"></span></p>
         </header>
-
-        <div>
-            <div>
-                <button id="connectEthereumAccountBtn">CEA</button>
-                <span>Current Account: <span id="currentAccount"></span></span>
+        <nav>
+            <div id="connect-ethereum-account-div">
+                <button id="connect-ethereum-account-btn">Connect</button>
+                <span>Account: <span id="current-account"></span></span>
             </div>
-        </div>
+
+            <div id="area-information">
+                <p>Purchased Area: <span id="num-purchased-area"></span></p>
+                <p>Remain Area: <span id="num-remain-area"></span></p>
+                <p style="color:yellow;">* 각 area 당 0.01 ether (= 10000000000000000 wei)</p>
+            </div>
+        </nav>
 
         <div id="map"></div>
     </body>
