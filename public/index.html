@@ -1,8 +1,11 @@
 <html>
     <head>
         <title>The Hundred Ether</title>
-        <script src="web3.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
         <script src="index.js"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Fira+Mono&family=Nanum+Gothic&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="index.css" />
     </head>
     <body>
@@ -12,18 +15,25 @@
             </h1>
             <h3>Team: 홍석주(20193398)</h3>
         </header>
-        <nav>
-            <div id="connect-ethereum-account-div">
-                <button id="connect-ethereum-account-btn">Connect</button>
-                <span>Account: <span id="current-account"></span></span>
+        <section>
+            <div id="ethereum-account-div">
+                <div>
+                    <button id="connect-ethereum-account-btn">Connect</button>
+                    <button type="button" class="command-btn">Buy Block</button>
+                      |  
+                    <button type="button" class="command-btn">My Blocks</button>
+                      |  
+                    <button type="button" class="command-btn">Modify My Block</button>
+                </div>
+                <div id="current-account-div">Account: <span id="current-account-span"></span></div>
             </div>
 
-            <div id="area-information">
-                <p>Purchased Area: <span id="num-purchased-area"></span></p>
-                <p>Remain Area: <span id="num-remain-area"></span></p>
-                <p style="color:yellow;">* 각 area 당 0.01 ether (= 10000000000000000 wei)</p>
+            <div id="area-information-div">
+                <p>Purchased Area: <span id="num-purchased-area-span"></span></p>
+                <p>Remain Area: <span id="num-remain-area-span"></span></p>
+                <p style="color:yellow;">* 0.01 ether per 1 area (= 10000000000000000 wei)</p>
             </div>
-        </nav>
+        </section>
 
         <div id="map"></div>
     </body>
