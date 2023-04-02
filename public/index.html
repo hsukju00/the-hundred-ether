@@ -2,6 +2,7 @@
     <head>
         <title>The One Ether</title>
         <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+        <script src="config.js"></script>
         <script src="index.js"></script>
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,13 +20,13 @@
             <div id="ethereum-account-div">
                 <div>
                     <button id="connect-ethereum-account-btn">Connect</button>
-                    <button type="button" class="command-btn">Buy Area</button>
+                    <button type="button" id="buy-area-btn" class="command-btn">Buy Area</button>
                       |  
-                    <button type="button" class="command-btn">My Areas</button>
+                    <button type="button" id="my-area-btn" class="command-btn">My Areas</button>
                       |  
-                    <button type="button" class="command-btn">Modify My Area</button>
+                    <button type="button" id="modify-area-btn" class="command-btn">Modify My Area</button>
                 </div>
-                <div id="current-account-div">Account: <span id="current-account-span"></span></div>
+                <div id="current-account-div">Account: <span id="current-account-span">unconnected</span></div>
             </div>
 
             <div id="area-information-div">

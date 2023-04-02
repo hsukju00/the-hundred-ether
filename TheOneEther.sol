@@ -8,6 +8,7 @@ contract TheOneEther {
         bool isPurchased;
         address owner;
         string url;
+        string comment;
     }
 
     address public owner;
@@ -24,26 +25,27 @@ contract TheOneEther {
         _;
     }
 
-    function purchaseArea(uint _index, string memory _url) public payable {
-
-        require(0 <= _index || _index < 100);
-        require(!areas[_index].isPurchased);
+    function purchaseArea(uint index, string memory url, string memory comment) public payable {
+        require(0 <= index || index < 100);
         require(msg.value == 0.01 ether);
+        require(!areas[index].isPurchased);
 
-        Area storage area = areas[_index];
+        Area storage area = areas[index];
         area.isPurchased = true;
         area.owner = msg.sender;
-        area.url = _url;
+        area.url = url;
+        area.comment = comment;
         numPurchasedArea++;
     }
 
-    function replaceAreaUrl(uint _index, string memory _url) public payable {
+    function modifyArea(uint index, string memory url, string memory comment) public payable {
+        require(0 <= index || index < 100);
+        require(msg.value == 0.0001 ether);
+        require(areas[index].owner == msg.sender);
 
-        require(0 <= _index || _index < 100);
-        require(areas[_index].owner == msg.sender);
-
-        Area storage area = areas[_index];
-        area.url = _url;
+        Area storage area = areas[index];
+        area.url = url;
+        area.comment = comment;
     }
 
     function withdrawFunds() public onlyOwner {
