@@ -1,56 +1,115 @@
 // SPDX-License-Identifier: NONE
-
-pragma solidity >= 0.7.0;
+pragma solidity >=0.8.0;
 
 contract TheOneEther {
-    
     struct Area {
         bool isPurchased;
         address owner;
         string url;
         string comment;
+        uint256 purchasedDate;
+        uint256 modifiedDate;
     }
 
     address public owner;
-    uint public numPurchasedArea;
-    Area[100] public areas;
+    uint256 public numPurchasedAreas;
+    mapping(uint8 => Area) private purchasedAreas;
+    mapping(address => uint8[]) private ownerMap;
 
     constructor() {
         owner = msg.sender;
-        numPurchasedArea = 0;
+        numPurchasedAreas = 0;
     }
 
     modifier onlyOwner() {
-        require(msg.sender == owner, "Only owner can call this function");
+        require(msg.sender == owner, "Only owner can call this function.");
         _;
     }
 
-    function purchaseArea(uint index, string memory url, string memory comment) public payable {
-        require(0 <= index || index < 100);
-        require(msg.value == 0.01 ether);
-        require(!areas[index].isPurchased);
+    function getPurchasedAreaByIndex(uint8 index)
+        public
+        view
+        returns (Area memory)
+    {
+        require(0 <= index && index < 100, "index must be between 0 and 99.");
+        require(
+            purchasedAreas[index].isPurchased,
+            "You need to access the purchased area."
+        );
+        return purchasedAreas[index];
+    }
 
-        Area storage area = areas[index];
-        area.isPurchased = true;
-        area.owner = msg.sender;
+    function getPurchasedAreasByOwner(address _owner)
+        public
+        view
+        returns (Area[] memory)
+    {
+        require(
+            ownerMap[_owner].length != 0,
+            "This account has no purchased areas."
+        );
+
+        uint8 cnt = 0;
+        Area[] memory ret = new Area[](ownerMap[_owner].length);
+        for (uint8 i = 0; i < ownerMap[_owner].length; i++) {
+            ret[cnt] = purchasedAreas[ownerMap[_owner][i]];
+            cnt++;
+        }
+        return ret;
+    }
+
+    function purchaseArea(
+        uint8 index,
+        string memory url,
+        string memory comment
+    ) public payable {
+        require(msg.value == 0.01 ether, "The amount sent must be 0.01 ether.");
+        require(0 <= index && index < 100, "Index must be between 0 and 99.");
+        require(
+            !purchasedAreas[index].isPurchased,
+            "The area you want to purchase must be an unpurchased area."
+        );
+
+        Area memory area = Area(
+            true,
+            msg.sender,
+            url,
+            comment,
+            block.timestamp,
+            0
+        );
+        purchasedAreas[index] = area;
+        numPurchasedAreas++;
+        ownerMap[msg.sender].push(index);
+    }
+
+    function modifyArea(
+        uint8 index,
+        string memory url,
+        string memory comment
+    ) public payable {
+        require(
+            msg.value == 0.0001 ether,
+            "The amount sent must be 0.0001 ether."
+        );
+        require(0 <= index && index < 100, "Index must be between 0 and 99.");
+        require(
+            purchasedAreas[index].isPurchased,
+            "You need to access the purchased area."
+        );
+        require(
+            purchasedAreas[index].owner == msg.sender,
+            "The area you want to change must belong to you."
+        );
+
+        Area storage area = purchasedAreas[index];
         area.url = url;
         area.comment = comment;
-        numPurchasedArea++;
+        area.modifiedDate = block.timestamp;
     }
 
-    function modifyArea(uint index, string memory url, string memory comment) public payable {
-        require(0 <= index || index < 100);
-        require(msg.value == 0.0001 ether);
-        require(areas[index].owner == msg.sender);
-
-        Area storage area = areas[index];
-        area.url = url;
-        area.comment = comment;
+    function done() public onlyOwner {
+        require(numPurchasedAreas == 100);
+        if (!payable(owner).send(address(this).balance)) revert();
     }
-
-    function withdrawFunds() public onlyOwner {
-        if (!payable(owner).send(address(this).balance))
-            revert();
-    }
-
 }
