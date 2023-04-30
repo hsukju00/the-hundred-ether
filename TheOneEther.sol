@@ -3,6 +3,7 @@ pragma solidity >=0.8.0;
 
 contract TheOneEther {
     struct Area {
+        uint8 index;
         bool isPurchased;
         address owner;
         string url;
@@ -13,8 +14,8 @@ contract TheOneEther {
 
     address public owner;
     uint256 public numPurchasedAreas;
-    mapping(uint8 => Area) private purchasedAreas;
-    mapping(address => uint8[]) private ownerMap;
+    Area[100] public purchasedAreas;
+    mapping(address => uint8[]) public ownerMap;
 
     constructor() {
         owner = msg.sender;
@@ -26,17 +27,16 @@ contract TheOneEther {
         _;
     }
 
-    function getPurchasedAreaByIndex(uint8 index)
-        public
-        view
-        returns (Area memory)
-    {
-        require(0 <= index && index < 100, "index must be between 0 and 99.");
-        require(
-            purchasedAreas[index].isPurchased,
-            "You need to access the purchased area."
-        );
-        return purchasedAreas[index];
+    function getAllPurchasedAreas() public view returns (Area[] memory) {
+        uint8 cnt = 0;
+        Area[] memory ret = new Area[](numPurchasedAreas);
+        for (uint8 i = 0; i < 100; i++) {
+            if (purchasedAreas[i].isPurchased) {
+                ret[cnt] = purchasedAreas[i];
+                cnt++;
+            }
+        }
+        return ret;
     }
 
     function getPurchasedAreasByOwner(address _owner)
@@ -58,6 +58,25 @@ contract TheOneEther {
         return ret;
     }
 
+    function getOwnermapByOwner(address _owner)
+        public
+        view
+        returns (uint8[] memory)
+    {
+        require(
+            ownerMap[_owner].length != 0,
+            "This account has no purchased areas."
+        );
+
+        uint8 cnt = 0;
+        uint8[] memory ret = new uint8[](ownerMap[_owner].length);
+        for (uint8 i = 0; i < ownerMap[_owner].length; i++) {
+            ret[cnt] = ownerMap[_owner][i];
+            cnt++;
+        }
+        return ret;
+    }
+
     function purchaseArea(
         uint8 index,
         string memory url,
@@ -71,6 +90,7 @@ contract TheOneEther {
         );
 
         Area memory area = Area(
+            index,
             true,
             msg.sender,
             url,

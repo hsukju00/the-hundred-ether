@@ -1,0 +1,28 @@
+<html>
+
+<head>
+    <title>My Areas</title>
+    <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Mono&family=Nanum+Gothic&display=swap" rel="stylesheet" />
+    <script>
+        ethereum.on("connect", async () => {
+            const accounts = await ethereum.request({method: "eth_accounts"});
+            if (accounts.length === 0) {
+                alert("There is currently no linked Ethereum wallet. Please access after connecting.");
+                window.close();
+                return
+            }
+        });
+    </script>
+    <script type="module" src="myAreas.js"></script>
+    <link rel="stylesheet" href="myAreas.css">
+</head>
+
+<body>
+    <h1 id="title">My Areas</h1>
+    <div id="my-area-div">There is no area you purchased.</div>
+</body>
+
+</html>

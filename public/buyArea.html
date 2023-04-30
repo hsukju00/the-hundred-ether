@@ -1,132 +1,46 @@
 <html>
-    <head>
-        <title>Buy Area</title>
-        <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
-        <script src="config.js"></script>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link
-            href="https://fonts.googleapis.com/css2?family=Fira+Mono&family=Nanum+Gothic&display=swap"
-            rel="stylesheet"
-        />
-        <script>
-            ethereum.on("connect", async () => {
-                const accounts = await ethereum.request({
-                    method: "eth_accounts",
-                });
-                if (accounts.length === 0) {
-                    alert(
-                        "There is currently no linked Ethereum wallet. Please access after connecting."
-                    );
-                    window.close();
-                    return;
-                }
+
+<head>
+    <title>Buy Area</title>
+    <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Mono&family=Nanum+Gothic&display=swap" rel="stylesheet" />
+    <script>
+        ethereum.on("connect", async () => {
+            const accounts = await ethereum.request({
+                method: "eth_accounts",
             });
-        </script>
-        <style>
-            * {
-                margin: 0;
-                padding: 0;
-                box-sizing: border-box;
-                font-family: "Fira Mono", "Nanum Gothic", monospace;
-            }
-            body {
-                padding: 30px 20px;
-            }
-            #title {
-                margin-bottom: 30px;
-            }
-            input,
-            textarea {
-                width: 100%;
-                border: 2px solid #ccc;
-                border-radius: 5px;
-                font-size: 12px;
-                font-weight: bold;
-                margin: 10px 0;
-                padding: 10px 20px;
-            }
-            textarea {
-                resize: none;
-            }
-            button[type="submit"] {
-                background-color: #008cba;
-                color: white;
-                border: none;
-                padding: 10px 20px;
-                border-radius: 5px;
-                cursor: pointer;
-                margin-top: 30px;
-            }
-        </style>
-    </head>
-    <body>
-        <h1 id="title">Buy Area</h1>
-        <form onsubmit="submitForm(event)">
-            <div>
-                <label for="url">URL:</label>
-                <input type="url" id="url" name="url" required />
-            </div>
-            <div>
-                <label for="index">Index:</label>
-                <input
-                    type="number"
-                    id="index"
-                    name="index"
-                    min="0"
-                    max="99"
-                    required
-                />
-            </div>
-            <div>
-                <label for="comment">Comment:</label>
-                <textarea
-                    id="comment"
-                    name="comment"
-                    maxlength="80"
-                    required
-                ></textarea>
-            </div>
-            <button type="submit">Submit</button>
-        </form>
-        <script>
-            const submitForm = async (event) => {
-                event.preventDefault();
-
-                const url = document.getElementById("url").value;
-                const index = document.getElementById("index").value;
-                const comment = document.getElementById("comment").value;
-
-                web3 = new Web3(web3.currentProvider);
-                const contract = await new web3.eth.Contract(
-                    abiObj,
-                    contractAddress
+            if (accounts.length === 0) {
+                alert(
+                    "There is currently no linked Ethereum wallet. Please access after connecting."
                 );
+                window.close();
+                return;
+            }
+        });
+    </script>
+    <script type="module" src="buyArea.js"></script>
+    <link rel="stylesheet" href="buyArea.css" />
+</head>
 
-                contract.methods.areas(index).call((err, areaObj) => {
-                    if (err) {
-                        console.log(err);
-                        return;
-                    }
+<body>
+    <h1 id="title">Buy Area</h1>
+    <form id="form">
+        <div>
+            <label for="url">URL:</label>
+            <input type="url" id="url" name="url" required />
+        </div>
+        <div>
+            <label for="index">Index:</label>
+            <input type="number" id="index" name="index" min="0" max="99" required />
+        </div>
+        <div>
+            <label for="comment">Comment:</label>
+            <textarea id="comment" name="comment" maxlength="80" required></textarea>
+        </div>
+        <button type="submit">Submit</button>
+    </form>
+</body>
 
-                    if (!areaObj.isPurchased) {
-                        contract.methods.purchaseArea(index, url, comment).send(
-                            {
-                                from: ethereum.selectedAddress,
-                                value: web3.utils.unitMap.ether / 100,
-                            },
-                            () => {
-                                setInterval(() => {
-                                    window.opener.location.reload();
-                                    window.close();
-                                }, 500);
-                            }
-                        );
-                    } else {
-                        alert("This area has already been purchased.");
-                    }
-                });
-            };
-        </script>
-    </body>
 </html>

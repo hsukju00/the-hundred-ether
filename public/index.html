@@ -1,41 +1,43 @@
 <html>
-    <head>
-        <title>The One Ether</title>
-        <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
-        <script src="config.js"></script>
-        <script src="index.js"></script>
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Fira+Mono&family=Nanum+Gothic&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="index.css" />
-    </head>
-    <body>
-        <header>
-            <h1>
-                The One Ether
-            </h1>
-            <h3>Team: 홍석주(20193398)</h3>
-        </header>
-        <section>
-            <div id="ethereum-account-div">
-                <div>
-                    <button id="connect-ethereum-account-btn">Connect</button>
-                    <button type="button" id="buy-area-btn" class="command-btn">Buy Area</button>
-                      |  
-                    <button type="button" id="my-area-btn" class="command-btn">My Areas</button>
-                      |  
-                    <button type="button" id="modify-area-btn" class="command-btn">Modify My Area</button>
-                </div>
-                <div id="current-account-div">Account: <span id="current-account-span">unconnected</span></div>
-            </div>
 
-            <div id="area-information-div">
-                <p>Purchased Area: <span id="num-purchased-area-span"></span></p>
-                <p>Remain Area: <span id="num-remain-area-span"></span></p>
-                <p style="color:yellow;">* 0.01 ether per 1 area (= 10000000000000000 wei)</p>
-            </div>
-        </section>
+<head>
+    <title>The One Ether</title>
+    <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Mono&family=Nanum+Gothic&display=swap" rel="stylesheet">
+    <script src="index.js" type="module"></script>
+    <link rel="stylesheet" href="index.css" />
+</head>
 
-        <div id="map"></div>
-    </body>
+<body>
+    <header>
+        <a href="/">
+            <h1>The One Ether</h1>
+        </a>
+        <h3>Team: 홍석주(20193398)</h3>
+    </header>
+    <section>
+        <div id="ethereum-account-div">
+            <div>
+                <button id="connect-ethereum-account-btn">Connect</button>
+                <button type="button" id="buy-area-btn" class="command-btn">Buy Area</button>
+                |
+                <button type="button" id="my-area-btn" class="command-btn">My Areas</button>
+                |
+                <button type="button" id="modify-area-btn" class="command-btn">Modify My Area</button>
+            </div>
+            <div id="current-account-div">Account: <span id="current-account-span">unconnected</span></div>
+        </div>
+
+        <div id="area-information-div">
+            <p>Purchased Area: <span id="num-purchased-area-span"></span></p>
+            <p>Remain Area: <span id="num-remain-area-span"></span></p>
+            <p style="color:yellow;">* 0.01 ether per 1 area (= 10000000000000000 wei)</p>
+        </div>
+    </section>
+
+    <div id="map"></div>
+</body>
+
 </html>
