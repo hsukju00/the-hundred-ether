@@ -1,14 +1,109 @@
 export const abiObj = [
     {
         "inputs": [],
+        "name": "done",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "uint8",
+                "name": "index",
+                "type": "uint8"
+            },
+            {
+                "internalType": "string",
+                "name": "url",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "comment",
+                "type": "string"
+            }
+        ],
+        "name": "modifyArea",
+        "outputs": [],
+        "stateMutability": "payable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "uint8",
+                "name": "index",
+                "type": "uint8"
+            },
+            {
+                "internalType": "string",
+                "name": "url",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "comment",
+                "type": "string"
+            }
+        ],
+        "name": "purchaseArea",
+        "outputs": [],
+        "stateMutability": "payable",
+        "type": "function"
+    },
+    {
+        "inputs": [],
         "stateMutability": "nonpayable",
         "type": "constructor"
     },
     {
-        "inputs": [],
-        "name": "done",
-        "outputs": [],
-        "stateMutability": "nonpayable",
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "name": "areas",
+        "outputs": [
+            {
+                "internalType": "uint8",
+                "name": "index",
+                "type": "uint8"
+            },
+            {
+                "internalType": "bool",
+                "name": "isPurchased",
+                "type": "bool"
+            },
+            {
+                "internalType": "address",
+                "name": "owner",
+                "type": "address"
+            },
+            {
+                "internalType": "string",
+                "name": "url",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "comment",
+                "type": "string"
+            },
+            {
+                "internalType": "uint256",
+                "name": "purchasedDate",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
+                "name": "modifiedDate",
+                "type": "uint256"
+            }
+        ],
+        "stateMutability": "view",
         "type": "function"
     },
     {
@@ -137,29 +232,6 @@ export const abiObj = [
         "type": "function"
     },
     {
-        "inputs": [
-            {
-                "internalType": "uint8",
-                "name": "index",
-                "type": "uint8"
-            },
-            {
-                "internalType": "string",
-                "name": "url",
-                "type": "string"
-            },
-            {
-                "internalType": "string",
-                "name": "comment",
-                "type": "string"
-            }
-        ],
-        "name": "modifyArea",
-        "outputs": [],
-        "stateMutability": "payable",
-        "type": "function"
-    },
-    {
         "inputs": [],
         "name": "numPurchasedAreas",
         "outputs": [
@@ -208,79 +280,7 @@ export const abiObj = [
         ],
         "stateMutability": "view",
         "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "uint8",
-                "name": "index",
-                "type": "uint8"
-            },
-            {
-                "internalType": "string",
-                "name": "url",
-                "type": "string"
-            },
-            {
-                "internalType": "string",
-                "name": "comment",
-                "type": "string"
-            }
-        ],
-        "name": "purchaseArea",
-        "outputs": [],
-        "stateMutability": "payable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "name": "purchasedAreas",
-        "outputs": [
-            {
-                "internalType": "uint8",
-                "name": "index",
-                "type": "uint8"
-            },
-            {
-                "internalType": "bool",
-                "name": "isPurchased",
-                "type": "bool"
-            },
-            {
-                "internalType": "address",
-                "name": "owner",
-                "type": "address"
-            },
-            {
-                "internalType": "string",
-                "name": "url",
-                "type": "string"
-            },
-            {
-                "internalType": "string",
-                "name": "comment",
-                "type": "string"
-            },
-            {
-                "internalType": "uint256",
-                "name": "purchasedDate",
-                "type": "uint256"
-            },
-            {
-                "internalType": "uint256",
-                "name": "modifiedDate",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
     }
 ]
-export const contractAddress = "0xAF83d66E415740656330f37B5b7Fc8d1475336cB"
+export const contractAddress = "0xB08d6526D15ded188b47633BfECB9e5a655502C2"
 

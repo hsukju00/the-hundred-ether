@@ -13,7 +13,7 @@ const submitForm = async (event) => {
         contractAddress
     );
 
-    contract.methods.purchasedAreas(index).call((err, areaObj) => {
+    contract.methods.areas(index).call((err, areaObj) => {
         if (err) {
             console.log(err);
             return;
