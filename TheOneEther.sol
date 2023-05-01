@@ -14,7 +14,7 @@ contract TheOneEther {
 
     address public owner;
     uint256 public numPurchasedAreas;
-    Area[100] public purchasedAreas;
+    Area[100] public areas;
     mapping(address => uint8[]) public ownerMap;
 
     constructor() {
@@ -31,8 +31,8 @@ contract TheOneEther {
         uint8 cnt = 0;
         Area[] memory ret = new Area[](numPurchasedAreas);
         for (uint8 i = 0; i < 100; i++) {
-            if (purchasedAreas[i].isPurchased) {
-                ret[cnt] = purchasedAreas[i];
+            if (areas[i].isPurchased) {
+                ret[cnt] = areas[i];
                 cnt++;
             }
         }
@@ -52,7 +52,7 @@ contract TheOneEther {
         uint8 cnt = 0;
         Area[] memory ret = new Area[](ownerMap[_owner].length);
         for (uint8 i = 0; i < ownerMap[_owner].length; i++) {
-            ret[cnt] = purchasedAreas[ownerMap[_owner][i]];
+            ret[cnt] = areas[ownerMap[_owner][i]];
             cnt++;
         }
         return ret;
@@ -85,20 +85,17 @@ contract TheOneEther {
         require(msg.value == 0.01 ether, "The amount sent must be 0.01 ether.");
         require(0 <= index && index < 100, "Index must be between 0 and 99.");
         require(
-            !purchasedAreas[index].isPurchased,
+            !areas[index].isPurchased,
             "The area you want to purchase must be an unpurchased area."
         );
 
-        Area memory area = Area(
-            index,
-            true,
-            msg.sender,
-            url,
-            comment,
-            block.timestamp,
-            0
-        );
-        purchasedAreas[index] = area;
+        Area storage area = areas[index];
+        area.index = index;
+        area.isPurchased = true;
+        area.owner = msg.sender;
+        area.url = url;
+        area.comment = comment;
+        area.purchasedDate = block.timestamp;
         numPurchasedAreas++;
         ownerMap[msg.sender].push(index);
     }
@@ -114,15 +111,15 @@ contract TheOneEther {
         );
         require(0 <= index && index < 100, "Index must be between 0 and 99.");
         require(
-            purchasedAreas[index].isPurchased,
+            areas[index].isPurchased,
             "You need to access the purchased area."
         );
         require(
-            purchasedAreas[index].owner == msg.sender,
+            areas[index].owner == msg.sender,
             "The area you want to change must belong to you."
         );
 
-        Area storage area = purchasedAreas[index];
+        Area storage area = areas[index];
         area.url = url;
         area.comment = comment;
         area.modifiedDate = block.timestamp;
