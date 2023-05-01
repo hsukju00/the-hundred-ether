@@ -282,5 +282,5 @@ export const abiObj = [
         "type": "function"
     }
 ]
-export const contractAddress = "0xB08d6526D15ded188b47633BfECB9e5a655502C2"
+export const contractAddress = "0xDA929A761E57220c4B96a6E94844Cc7f896E0958"
 

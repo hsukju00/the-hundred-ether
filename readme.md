@@ -303,3 +303,4 @@ getPurchasedAreasByOwner 함수를 통해 해당 계정이 소유한 모든 구�
 ## 시연동영상
 
 동작이 되는 모습은 시연동영상을 통해 확인이 가능합니다.
+[네트워크최신기술 project1 - The One Ether](https://youtu.be/z3Tj4VIdLNM)
